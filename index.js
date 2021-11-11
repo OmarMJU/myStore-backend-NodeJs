@@ -2,8 +2,8 @@ const express = require("express");
 const app = express();
 const _PORT = 3000;
 
-app.get("/", (request, response) => {
-    response.send("Soy tu servidor en Express");
+app.get("/", (req, res) => {
+    res.send("Soy tu servidor en Express");
 });
 
 app.get("/contact", (req, res) => {
@@ -11,13 +11,24 @@ app.get("/contact", (req, res) => {
 });
 
 app.get("/products", (req, res) => {
+    res.json([
+        { name: "Microblading", price: 2500 },
+        { name: "Lifting de pestañas", price: 600 },
+        { name: "Facial", price: 300 },
+        { name: "Maquillaje", price: 1500 }
+    ]);
+});
+
+app.get("/products/:id", (req, res) => {
+    const { id } = req.params;
+    res.json({ id, name: "Microblading", price: 2500 },);
+});
+
+app.get("/categories/:categoryId/products/:productId", (req, res) => {
+    const { categoryId, productId } = req.params;
     res.json({
-        products: [
-            {name: "Microblading", price: 2500},
-            {name: "Lifting de pestañas", price: 600},
-            {name: "Facial", price: 300},
-            {name: "Maquillaje", price: 1500}
-        ]
+        categoryId,
+        productId
     });
 });
 
