@@ -1,4 +1,5 @@
 const express = require("express");
+const faker = require("faker");
 const app = express();
 const _PORT = 3000;
 
@@ -14,12 +15,19 @@ app.get("/contact", (req, res) => {
 
 /* Endpoints products */
 app.get("/products", (req, res) => {
-    res.json([
-        { name: "Microblading", price: 2500 },
-        { name: "Lifting de pestañas", price: 600 },
-        { name: "Facial", price: 300 },
-        { name: "Maquillaje", price: 1500 }
-    ]);
+    const products = [];
+    const { limit } = req.query;
+    const size = limit || 20;
+
+    for (let i = 0; i < size; i++) {
+        products.push({
+            name: faker.commerce.productName(),
+            price: parseInt(faker.commerce.price(), 10),
+            image: faker.image.imageUrl()
+        });
+    }
+
+    res.json(products);
 });
 
 app.get("/products/:id", (req, res) => {
@@ -46,12 +54,21 @@ app.get("/categories/:categoryId/products/:productId", (req, res) => {
 
 /* Endpoints users */
 app.get("/users", (req, res) => {
-    res.json([
-        { name: "Daniela", lastName: "Zamudio", age: "30", mail: "danni_zam@mail.com" },
-        { name: "Manoli", lastName: "Hernandez", age: "35", mail: "mano_her35@mail.com" },
-        { name: "Pamela", lastName: "Rosas", age: "52", mail: "pam.rosas@mail.com" },
-        { name: "Janneth", lastName: "Carmona", age: "45", mail: "jan-car@mail.com" }
-    ]);
+    const { limit, offset} = req.query;
+
+    if (limit && offset) {
+        res.json({
+            limit: limit,
+            offset: offset
+        });
+    } else {
+        res.json([
+            { name: "Daniela", lastName: "Zamudio", age: "30", mail: "danni_zam@mail.com" },
+            { name: "Manoli", lastName: "Hernandez", age: "35", mail: "mano_her35@mail.com" },
+            { name: "Pamela", lastName: "Rosas", age: "52", mail: "pam.rosas@mail.com" },
+            { name: "Janneth", lastName: "Carmona", age: "45", mail: "jan-car@mail.com" }
+        ]);
+    }
 });
 
 app.get("/users/:id", (req, res) => {
