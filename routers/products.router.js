@@ -21,13 +21,24 @@ routerProducts.get("/", (req, res) => {
 
 routerProducts.get("/:id", (req, res) => {
     const { id } = req.params;
-    res.json({ id, name: "Microblading", price: 2500 },);
+
+    if (id === "666") {
+        res.status(404).json({
+            message: "The resourse not found :("
+        });
+    } else {
+        res.status(200).json({
+            id,
+            name:"Microblading",
+            price: 2500
+        });
+    }
 });
 
 routerProducts.post("/", (req, res) => {
     const body = req.body;
 
-    res.json({
+    res.status(201).json({
         message: "Created",
         data: body
     });
