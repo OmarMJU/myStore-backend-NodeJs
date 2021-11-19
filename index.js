@@ -3,6 +3,9 @@ const express = require("express");
 const app = express();
 const _PORT = 3000;
 
+// Middleware
+app.use(express.json());
+
 /* Endpoints home */
 app.get("/", (req, res) => {
     res.send("Soy tu servidor en Express");

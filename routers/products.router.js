@@ -24,4 +24,13 @@ routerProducts.get("/:id", (req, res) => {
     res.json({ id, name: "Microblading", price: 2500 },);
 });
 
+routerProducts.post("/", (req, res) => {
+    const body = req.body;
+
+    res.json({
+        message: "Created",
+        data: body
+    });
+});
+
 module.exports = routerProducts;
