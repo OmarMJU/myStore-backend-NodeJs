@@ -16,7 +16,7 @@ routerProducts.get("/", (req, res) => {
         });
     }
 
-    res.json(products);
+    res.status(200).json(products);
 });
 
 routerProducts.get("/:id", (req, res) => {
@@ -48,7 +48,7 @@ routerProducts.patch("/:id",  (req, res) => {
     const { id } = req.params;
     const body = req.body;
 
-    res.json({
+    res.status(201).json({
         id: id,
         message: "Updated",
         data: body
@@ -58,7 +58,7 @@ routerProducts.patch("/:id",  (req, res) => {
 routerProducts.delete("/:id", (req, res) => {
     const { id } = req.params;
 
-    res.json({
+    res.status(201).json({
         id: id,
         message: "Deleted"
     });

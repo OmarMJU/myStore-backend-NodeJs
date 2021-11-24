@@ -3,7 +3,7 @@ const routerCategories = express.Router();
 
 /* Endpoints categories */
 routerCategories.get("/", (req, res) => {
-    res.json([
+    res.status(200).json([
         { name: "Salud", items: 20 },
         { name: "Belleza", items: 30 },
         { name: "Confort", items: 10 }
@@ -12,7 +12,7 @@ routerCategories.get("/", (req, res) => {
 
 routerCategories.get("/:categoryId/products/:productId", (req, res) => {
     const { categoryId, productId } = req.params;
-    res.json({
+    res.status(200).json({
         categoryId,
         productId
     });

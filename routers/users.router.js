@@ -6,7 +6,7 @@ routerUsers.get("/", (req, res) => {
     const { limit, offset} = req.query;
 
     if (limit && offset) {
-        res.json({
+        res.status(200).json({
             limit: limit,
             offset: offset
         });
@@ -22,7 +22,7 @@ routerUsers.get("/", (req, res) => {
 
 routerUsers.get("/:id", (req, res) => {
     const { id } = req.params;
-    res.json({
+    res.status(200).json({
         id,
         name: "Daniela",
         lastName: "Zamudio",
@@ -33,7 +33,7 @@ routerUsers.get("/:id", (req, res) => {
 
 routerUsers.get("/:id/shopping", (req, res) => {
     const { id } = req.params;
-    res.json({
+    res.status(200).json({
         idUser: id,
         shopping: [
             { name: "Micoblading", price: 2500, date: "14/10/2021" },
@@ -44,7 +44,7 @@ routerUsers.get("/:id/shopping", (req, res) => {
 
 routerUsers.get("/:idUser/shopping/:idShop", (req, res) => {
     const { idUser, idShop } = req.params;
-    res.json({
+    res.status(200).json({
         idUser,
         idShop,
         shop: { name: "Micoblading", price: 2500, date: "14/10/2021" }
