@@ -22,7 +22,11 @@ routerProducts.get("/:id", (req, res) => {
 routerProducts.post("/", (req, res) => {
     const datas = req.body;
     const newProduct = service.create(datas);
-    res.status(201).json(newProduct);
+
+    res.status(201).json({
+        message: "Product Created",
+        newProduct
+    });
 });
 
 // Actualiza producto.
@@ -30,14 +34,22 @@ routerProducts.patch("/:id",  (req, res) => {
     const { id } = req.params;
     const datas = req.body;
     const productUpdate = service.update(id, datas);
-    res.status(201).json(productUpdate);
+
+    res.status(201).json({
+        message: "Product updated",
+        productUpdate
+    });
 });
 
 // Elimina producto.
 routerProducts.delete("/:id", (req, res) => {
     const { id } = req.params;
     const productDelete = service.delete(id);
-    res.status(201).json(productDelete);
+
+    res.status(201).json({
+        message: "Product deleted",
+        productDelete
+    });
 });
 
 module.exports = routerProducts;
