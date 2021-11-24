@@ -14,18 +14,18 @@ routerCategories.get("/", (req, res) => {
 routerCategories.get("/:id", (req, res) => {
     const { id } = req.params;
     res.status(200).json({
-        id: id,
+        id,
         categoryName: "Salud"
     });
 });
 
 // Crea categoria.
 routerCategories.post("/", (req, res) => {
-    const data = req.body;
+    const datas = req.body;
 
     res.status(201).json({
         message: "Category created",
-        data: data
+        datas
     });
 });
 
@@ -36,7 +36,8 @@ routerCategories.patch("/:id", (req, res) => {
 
     res.status(201).json({
         message: "Category updated",
-        data: datas
+        id,
+        datas
     });
 });
 
@@ -44,7 +45,7 @@ routerCategories.delete("/:id", (req, res) => {
     const { id } = req.params;
 
     res.status(201).json({
-        id: id,
+        id,
         message: "Category deleted"
     });
 });

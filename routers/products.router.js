@@ -10,6 +10,7 @@ routerProducts.get("/", (req, res) => {
 
     for (let i = 0; i < size; i++) {
         products.push({
+            id: faker.datatype.uuid(),
             name: faker.commerce.productName(),
             price: parseInt(faker.commerce.price(), 10),
             image: faker.image.imageUrl()
@@ -29,29 +30,31 @@ routerProducts.get("/:id", (req, res) => {
     } else {
         res.status(200).json({
             id,
-            name:"Microblading",
-            price: 2500
+            name: faker.commerce.productName(),
+            price: parseInt(faker.commerce.price(), 10),
+            image: faker.image.imageUrl()
         });
     }
 });
 
 routerProducts.post("/", (req, res) => {
-    const body = req.body;
+    const datas = req.body;
 
     res.status(201).json({
-        message: "Created",
-        data: body
+        message: "Product created",
+        id: faker.datatype.uuid(),
+        datas
     });
 });
 
 routerProducts.patch("/:id",  (req, res) => {
     const { id } = req.params;
-    const body = req.body;
+    const datas = req.body;
 
     res.status(201).json({
-        id: id,
-        message: "Updated",
-        data: body
+        message: "Product updated",
+        id,
+        datas
     });
 });
 
@@ -59,8 +62,8 @@ routerProducts.delete("/:id", (req, res) => {
     const { id } = req.params;
 
     res.status(201).json({
-        id: id,
-        message: "Deleted"
+        id,
+        message: "Product deleted"
     });
 });
 
