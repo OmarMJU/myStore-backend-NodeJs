@@ -1,31 +1,31 @@
 const express = require("express");
+const CategoriesServie = require("../services/categories.service");
 const routerCategories = express.Router();
+
+// Instancia del servicio.
+const service = new CategoriesServie();
 
 // Todas la categorias.
 routerCategories.get("/", (req, res) => {
-    res.status(200).json([
-        { name: "Salud", items: 20 },
-        { name: "Belleza", items: 30 },
-        { name: "Confort", items: 10 }
-    ]);
+    const categories = service.getAll();
+    res.status(200).json(categories);
 });
 
 // Categoria por id.
 routerCategories.get("/:id", (req, res) => {
     const { id } = req.params;
-    res.status(200).json({
-        id,
-        categoryName: "Salud"
-    });
+    const category = service.getOne(id);
+    res.status(200).json(category);
 });
 
 // Crea categoria.
 routerCategories.post("/", (req, res) => {
     const datas = req.body;
+    const categoryCreated = service.create(datas);
 
     res.status(201).json({
         message: "Category created",
-        datas
+        categoryCreated
     });
 });
 
@@ -33,20 +33,21 @@ routerCategories.post("/", (req, res) => {
 routerCategories.patch("/:id", (req, res) => {
     const { id } = req.params;
     const datas = req.body;
+    const categoryUpdate = service.update(id, datas);
 
     res.status(201).json({
         message: "Category updated",
-        id,
-        datas
+        categoryUpdate
     });
 });
 
 routerCategories.delete("/:id", (req, res) => {
     const { id } = req.params;
+    const categoryDelete = service.delete(id);
 
     res.status(201).json({
-        id,
-        message: "Category deleted"
+        message: "Category deleted",
+        categoryDelete
     });
 });
 
