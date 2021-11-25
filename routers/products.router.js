@@ -1,4 +1,3 @@
-const { json } = require("express");
 const express = require("express");
 const ProductService = require("../services/products.service");
 const routerProducts = express.Router();
