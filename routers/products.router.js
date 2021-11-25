@@ -1,3 +1,4 @@
+const { json } = require("express");
 const express = require("express");
 const ProductService = require("../services/products.service");
 const routerProducts = express.Router();
@@ -6,22 +7,30 @@ const routerProducts = express.Router();
 const service =  new ProductService();
 
 // Obtiene todos los productos.
-routerProducts.get("/", (req, res) => {
-    const products = service.getAll();
+routerProducts.get("/", async (req, res) => {
+    const products = await service.getAll();
     res.status(200).json(products);
 });
 
 // Obtiene el producto por id.
-routerProducts.get("/:id", (req, res) => {
+routerProducts.get("/:id", async (req, res) => {
     const { id } = req.params;
-    const product = service.getOne(id);
-    res.status(200).json(product);
+
+    try {
+        const product = await service.getOne(id);
+        res.status(200).json(product);
+    } catch (error) {
+        res.status(404).json({
+            error: "Error to get product",
+            message: error
+        });
+    }
 });
 
 // Crea producto.
-routerProducts.post("/", (req, res) => {
+routerProducts.post("/", async (req, res) => {
     const datas = req.body;
-    const newProduct = service.create(datas);
+    const newProduct = await service.create(datas);
 
     res.status(201).json({
         message: "Product Created",
@@ -30,26 +39,42 @@ routerProducts.post("/", (req, res) => {
 });
 
 // Actualiza producto.
-routerProducts.patch("/:id",  (req, res) => {
+routerProducts.patch("/:id",  async (req, res) => {
     const { id } = req.params;
     const datas = req.body;
-    const productUpdate = service.update(id, datas);
 
-    res.status(201).json({
-        message: "Product updated",
-        productUpdate
-    });
+    try {
+        const productUpdate = await service.update(id, datas);
+
+        res.status(201).json({
+            message: "Product updated",
+            productUpdate
+        });
+    } catch (error) {
+        res.status(404).json({
+            error: "Error to udate product",
+            message: error
+        });
+    }
 });
 
 // Elimina producto.
-routerProducts.delete("/:id", (req, res) => {
+routerProducts.delete("/:id", async (req, res) => {
     const { id } = req.params;
-    const productDelete = service.delete(id);
 
-    res.status(201).json({
-        message: "Product deleted",
-        productDelete
-    });
+    try {
+        const productDelete = await service.delete(id);
+
+        res.status(201).json({
+            message: "Product deleted",
+            productDelete
+        });
+    } catch (error) {
+        res.status(404).json({
+            error: "Error to delete product",
+            message: error
+        });
+    }
 });
 
 module.exports = routerProducts;

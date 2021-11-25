@@ -23,53 +23,79 @@ class ProductService {
     }
 
     // Obtiene todos los productos.
-    getAll() {
-        return this.products;
+    async getAll() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(this.products)
+            }, 5000);
+        });
     }
 
     // Obtiene un producto por Id.
-    getOne(id) {
-        return this.products.filter(item => item.id === id);
+    async getOne(id) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const index = this.products.findIndex(product => product.id === id);
+                if (index === -1) {
+                    reject("Product not found.");
+                } else {
+                    const product = this.products.filter(item => item.id === id);
+                    resolve(product);
+                }
+            }, 3000);
+        });
     }
 
     // Crea un producto.
-    create(datas) {
-        const newProduct = {
-            id: faker.datatype.uuid(),
-            ...datas
-        };
+    async create(datas) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const newProduct = {
+                    id: faker.datatype.uuid(),
+                    ...datas
+                };
 
-        this.products.push(newProduct);
-        return newProduct;
+                this.products.push(newProduct);
+                resolve(newProduct);
+            }, 3000);
+        });
     }
 
     // Actualiza un producto.
-    update(id, dataChanges) {
-        const index = this.products.findIndex(item => item.id === id);
+    async update(id, dataChanges) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const index = this.products.findIndex(item => item.id === id);
 
-        if (index === -1) {
-            throw new Error("Product not found");
-        }
+                if (index === -1) {
+                    reject("Product not found");
+                } else {
+                    const product = this.products[index];
+                    this.products[index] = {
+                        ...product,
+                        ...dataChanges
+                    };
 
-        const product = this.products[index];
-        this.products[index] = {
-            ...product,
-            ...dataChanges
-        };
-
-        return this.products[index];
+                    resolve(this.products[index]);
+                }
+            }, 3000);
+        });
     }
 
     // Elimina un producto.
-    delete(id) {
-        const index = this.products.findIndex(index => index.id === id);
+    async delete(id) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const index = this.products.findIndex(index => index.id === id);
 
-        if (index === -1) {
-            throw new Error("Product not found");
-        }
-
-        this.products.splice(index, 1);
-        return { id };
+                if (index === -1) {
+                    reject("Product not found");
+                } else {
+                    this.products.splice(index, 1);
+                    resolve({ id });
+                }
+            }, 1000);
+        });
     }
 }
 
