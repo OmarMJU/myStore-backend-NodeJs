@@ -38,7 +38,7 @@ class UserService {
                 const index = this.users.findIndex(user => user.id === id);
 
                 if (index === -1) {
-                    reject("User not found");
+                    reject("User not found to get");
                 } else {
                     const userFind = this.users.filter(item => item.id === id);
                     resolve(userFind);
@@ -69,7 +69,7 @@ class UserService {
                 const index = this.users.findIndex(index => index.id === id);
 
                 if(index === -1) {
-                    reject("User not found");
+                    reject("User not found to update");
                 } else {
                     const userUpdate = this.users[index];
                     this.users[index] = {
@@ -91,7 +91,7 @@ class UserService {
                 const index = this.users.findIndex(item => item.id === id);
 
                 if(index === -1) {
-                    reject("User not found");
+                    reject("User not found to delete");
                 } else {
                     this.users.splice(index, 1);
                     resolve({ id });

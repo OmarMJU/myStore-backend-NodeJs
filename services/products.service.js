@@ -37,7 +37,7 @@ class ProductService {
             setTimeout(() => {
                 const index = this.products.findIndex(product => product.id === id);
                 if (index === -1) {
-                    reject("Product not found.");
+                    reject("Product not found to get");
                 } else {
                     const product = this.products.filter(item => item.id === id);
                     resolve(product);
@@ -68,7 +68,7 @@ class ProductService {
                 const index = this.products.findIndex(item => item.id === id);
 
                 if (index === -1) {
-                    reject("Product not found");
+                    reject("Product not found to update");
                 } else {
                     const product = this.products[index];
                     this.products[index] = {
@@ -89,7 +89,7 @@ class ProductService {
                 const index = this.products.findIndex(index => index.id === id);
 
                 if (index === -1) {
-                    reject("Product not found");
+                    reject("Product not found to delete");
                 } else {
                     this.products.splice(index, 1);
                     resolve({ id });
