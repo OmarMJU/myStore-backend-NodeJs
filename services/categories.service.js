@@ -23,53 +23,81 @@ class CategoriesServie {
     }
 
     // Todas las categorias.
-    getAll() {
-        return this.categories;
+    async getAll() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(this.categories);
+            }, 5000);
+        });
     }
 
     // Una categorìa por id.
-    getOne(id) {
-        return this.categories.filter(item => item.id === id);
+    async getOne(id) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const index = this.categories.findIndex(category => category.id === id);
+
+                if (index === -1) {
+                    reject("Categorie not found to get");
+                } else {
+                    const category = this.categories.filter(item => item.id === id);
+                    resolve(category);
+                }
+            }, 2000);
+        });
     }
 
     // Crea una categoria.
-    create(datas) {
-        const newCategory = {
-            id: faker.datatype.uuid(),
-            ...datas
-        };
+    async create(datas) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const newCategory = {
+                    id: faker.datatype.uuid(),
+                    ...datas
+                };
 
-        this.categories.push(newCategory);
-        return newCategory;
+                this.categories.push(newCategory);
+                resolve(newCategory);
+            }, 2000);
+        });
     }
 
     // Actualiza una categorìa.
-    update(id, dataChange) {
-        const index = this.categories.findIndex(item => item.id === id);
+    async update(id, dataChange) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const index = this.categories.findIndex(item => item.id === id);
 
-        if (index === -1) {
-            throw new Error("Category not found");
-        }
+                if (index === -1) {
+                    reject("Category not found to update");
+                } else {
+                    const category = this.categories[index];
+                    this.categories[index] = {
+                        ...category,
+                        ...dataChange
+                    };
 
-        const category = this.categories[index];
-        this.categories[index] = {
-            ...category,
-            ...dataChange
-        };
-
-        return this.categories[index];
+                    const categoryUpdate = this.categories[index];
+                    resolve(categoryUpdate);
+                }
+            }, 2000);
+        });
     }
 
     // Borrar categoria
-    delete(id) {
-        const index = this.categories.findIndex(item => item.id === id);
+    async delete(id) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const index = this.categories.findIndex(item => item.id === id);
 
-        if (index === -1) {
-            throw new Error("Category not found");
-        }
-
-        this.categories.splice(index, 1);
-        return { id };
+                if (index === -1) {
+                    reject("Category not found to delete");
+                } else {
+                    this.categories.splice(index, 1);
+                    resolve({ id });
+                }
+            }, 2000);
+        });
     }
 }
 
