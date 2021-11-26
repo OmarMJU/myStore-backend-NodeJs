@@ -32,6 +32,16 @@ class CategoriesServie {
         });
     }
 
+    /**
+     * N O T A: Cuando el método regresa una promesa el error siempre debe ir
+     * dentro de la funcion "reject", para este caso el "boom" va dentro del reject.
+     * Si el metodo regresa una promesa y en vez de la funcion "reject" se usa un
+     * "throw", el programa lanzara un error debido a que no sabe interpretar el "throw"
+     * para regresar el error.
+     * Para el caso de exito dentro de una promesa se debe usar la funcion "resolve" y
+     * no el "return".
+     * Para ver un métod que usa throw y un return en vez de promesa ver el método "delete".
+     */
     // Una categorìa por id.
     async getOne(id) {
         return new Promise((resolve, reject) => {
@@ -84,20 +94,20 @@ class CategoriesServie {
         });
     }
 
+    /**
+     * N O T A: Para metodos que no regresan promesa o hacen uso de
+     * ellas se puede realizar el "return" y el "throws" de forma normal.
+     */
     // Borrar categoria
     async delete(id) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const index = this.categories.findIndex(item => item.id === id);
+        const index = this.categories.findIndex(item => item.id === id);
 
-                if (index === -1) {
-                    reject("Category not found to delete");
-                } else {
-                    this.categories.splice(index, 1);
-                    resolve({ id });
-                }
-            }, 2000);
-        });
+        if (index === -1) {
+            throw boom.notFound("Category not found to delete");
+        }
+
+        this.categories.splice(index, 1);
+        return { id };
     }
 }
 

@@ -54,7 +54,7 @@ routerCategories.patch("/:id", async (req, res) => {
     }
 });
 
-routerCategories.delete("/:id", async (req, res) => {
+routerCategories.delete("/:id", async (req, res, next) => {
     const { id } = req.params;
 
     try {
@@ -65,10 +65,7 @@ routerCategories.delete("/:id", async (req, res) => {
             categoryDelete
         });
     } catch (error) {
-        res.status(404).json({
-            error: "Error to delete category",
-            message: error
-        });
+        next(error);
     }
 });
 
