@@ -20,10 +20,6 @@ routerCategories.get("/:id", async (req, res, next) => {
         res.status(200).json(category);
     } catch (error) {
         next(error);
-        // res.status(404).json({
-        //     error: "Error to get category",
-        //     message: error
-        // });
     }
 });
 

@@ -1,4 +1,5 @@
 const faker = require("faker");
+const boom = require("@hapi/boom");
 
 class CategoriesServie {
 
@@ -35,17 +36,13 @@ class CategoriesServie {
     async getOne(id) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                const index = this.categories.findIndex(category => category.id === id);
+                const category = this.categories.find(item => item.id === id);
 
-                if (index === -1) {
-                    reject({
-                        error: "Error to get category",
-                        message: "Categorie not found to get"
-                    });
-                } else {
-                    const category = this.categories.filter(item => item.id === id);
-                    resolve(category);
+                if (!category) {
+                    reject(boom.notFound("Category not found"));
                 }
+
+                resolve(category);
             }, 2000);
         });
     }
