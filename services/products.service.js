@@ -18,7 +18,8 @@ class ProductService {
                 id: faker.datatype.uuid(),
                 name: faker.commerce.productName(),
                 price: parseInt(faker.commerce.price(), 10),
-                image: faker.image.imageUrl()
+                image: faker.image.imageUrl(),
+                isBlock: faker.datatype.boolean()
             });
         }
     }
@@ -40,10 +41,12 @@ class ProductService {
 
                 if (!product) {
                     reject(boom.notFound("Product not found to get"));
+                } else if (product.isBlock) {
+                    reject(boom.conflict("Product is block"));
                 } else {
                     resolve(product);
                 }
-            }, 3000);
+            }, 2000);
         });
     }
 
