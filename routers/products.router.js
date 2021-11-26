@@ -12,17 +12,14 @@ routerProducts.get("/", async (req, res) => {
 });
 
 // Obtiene el producto por id.
-routerProducts.get("/:id", async (req, res) => {
+routerProducts.get("/:id", async (req, res, next) => {
     const { id } = req.params;
 
     try {
         const product = await service.getOne(id);
         res.status(200).json(product);
     } catch (error) {
-        res.status(404).json({
-            error: "Error to get product",
-            message: error
-        });
+        next(error);
     }
 });
 
@@ -38,7 +35,7 @@ routerProducts.post("/", async (req, res) => {
 });
 
 // Actualiza producto.
-routerProducts.patch("/:id",  async (req, res) => {
+routerProducts.patch("/:id",  async (req, res, next) => {
     const { id } = req.params;
     const datas = req.body;
 
@@ -50,15 +47,12 @@ routerProducts.patch("/:id",  async (req, res) => {
             productUpdate
         });
     } catch (error) {
-        res.status(404).json({
-            error: "Error to udate product",
-            message: error
-        });
+        next(error);
     }
 });
 
 // Elimina producto.
-routerProducts.delete("/:id", async (req, res) => {
+routerProducts.delete("/:id", async (req, res, next) => {
     const { id } = req.params;
 
     try {
@@ -69,10 +63,7 @@ routerProducts.delete("/:id", async (req, res) => {
             productDelete
         });
     } catch (error) {
-        res.status(404).json({
-            error: "Error to delete product",
-            message: error
-        });
+        next(error);
     }
 });
 

@@ -1,4 +1,5 @@
 const faker = require("faker");
+const boom = require("@hapi/boom");
 
 class ProductService {
 
@@ -35,11 +36,11 @@ class ProductService {
     async getOne(id) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                const index = this.products.findIndex(product => product.id === id);
-                if (index === -1) {
-                    reject("Product not found to get");
+                const product = this.products.find(product => product.id === id);
+
+                if (!product) {
+                    reject(boom.notFound("Product not found to get"));
                 } else {
-                    const product = this.products.filter(item => item.id === id);
                     resolve(product);
                 }
             }, 3000);
@@ -68,7 +69,7 @@ class ProductService {
                 const index = this.products.findIndex(item => item.id === id);
 
                 if (index === -1) {
-                    reject("Product not found to update");
+                    reject(boom.notFound("Product not found to update"));
                 } else {
                     const product = this.products[index];
                     this.products[index] = {
@@ -84,18 +85,14 @@ class ProductService {
 
     // Elimina un producto.
     async delete(id) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const index = this.products.findIndex(index => index.id === id);
+        const index = this.products.findIndex(index => index.id === id);
 
-                if (index === -1) {
-                    reject("Product not found to delete");
-                } else {
-                    this.products.splice(index, 1);
-                    resolve({ id });
-                }
-            }, 1000);
-        });
+        if (index === -1) {
+            throw boom.notFound("Product not found to delete");
+        }
+
+        this.products.splice(index, 1);
+        return { id };
     }
 }
 
