@@ -19,6 +19,7 @@ app.listen(_PORT, () => {
 
 routerApi(app);
 
+// Middlewares para gestion de errores.
 app.use(logError);
 app.use(boomErrorHandle);
 app.use(errorHandle);

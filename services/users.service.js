@@ -1,4 +1,5 @@
 const faker = require("faker");
+const boom = require("@hapi/boom");
 
 class UserService {
 
@@ -17,7 +18,8 @@ class UserService {
                 id: faker.datatype.uuid(),
                 name: faker.name.findName(),
                 gender: faker.name.gender(),
-                emal: faker.internet.email()
+                emal: faker.internet.email(),
+                isBlock: faker.datatype.boolean()
             });
         }
     }
@@ -35,13 +37,14 @@ class UserService {
     async getOne(id) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                const index = this.users.findIndex(user => user.id === id);
+                const user = this.users.find(user => user.id === id);
 
-                if (index === -1) {
-                    reject("User not found to get");
+                if(!user) {
+                    reject(boom.notFound("User not found to get"));
+                } else if (user.isBlock) {
+                    reject(boom.conflict("User is block"));
                 } else {
-                    const userFind = this.users.filter(item => item.id === id);
-                    resolve(userFind);
+                    resolve(user);
                 }
             }, 3000);
         });
@@ -69,7 +72,7 @@ class UserService {
                 const index = this.users.findIndex(index => index.id === id);
 
                 if(index === -1) {
-                    reject("User not found to update");
+                    reject(boom.notFound("User not found to update"));
                 } else {
                     const userUpdate = this.users[index];
                     this.users[index] = {
@@ -86,18 +89,14 @@ class UserService {
 
     // Eliminar usuario.
     async delete(id) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const index = this.users.findIndex(item => item.id === id);
+        const index = this.users.findIndex(item => item.id === id);
 
-                if(index === -1) {
-                    reject("User not found to delete");
-                } else {
-                    this.users.splice(index, 1);
-                    resolve({ id });
-                }
-            }, 2000);
-        });
+        if(index === -1) {
+            throw boom.notFound("User not found to delete");
+        }
+
+        this.users.splice(index, 1);
+        return { id };
     }
 }
 

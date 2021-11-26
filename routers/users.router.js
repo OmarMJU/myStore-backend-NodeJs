@@ -12,17 +12,14 @@ routerUsers.get("/", async (req, res) => {
 });
 
 // Usuario por id.
-routerUsers.get("/:id", async (req, res) => {
+routerUsers.get("/:id", async (req, res, next) => {
     const { id } = req.params;
 
     try {
         const user = await service.getOne(id);
         res.status(200).json(user);
     } catch (error) {
-        res.status(404).json({
-            error: "Error to get user",
-            message: error
-        });
+        next(error);
     }
 });
 
@@ -38,7 +35,7 @@ routerUsers.post("/", async (req, res) => {
 });
 
 // Actualizar usuario
-routerUsers.patch("/:id", async (req, res) => {
+routerUsers.patch("/:id", async (req, res, next) => {
     const { id } = req.params;
     const datas = req.body;
 
@@ -50,15 +47,12 @@ routerUsers.patch("/:id", async (req, res) => {
             userUpdate
         });
     } catch (error) {
-        res.status(404).json({
-            error: "Error to update user",
-            message: error
-        });
+        next(error);
     }
 });
 
 // Eliminar usuario.
-routerUsers.delete("/:id", async (req, res) => {
+routerUsers.delete("/:id", async (req, res, next) => {
     const { id } = req.params;
 
     try {
@@ -69,10 +63,7 @@ routerUsers.delete("/:id", async (req, res) => {
             userDelete
         });
     } catch (error) {
-        res.status(404).json({
-            error: "Error to delete user",
-            message: error
-        });
+        next(error);
     }
 });
 
