@@ -79,7 +79,7 @@ class CategoriesServie {
                 const index = this.categories.findIndex(item => item.id === id);
 
                 if (index === -1) {
-                    reject("Category not found to update");
+                    reject(boom.notFound("Category not found to update"));
                 } else {
                     const category = this.categories[index];
                     this.categories[index] = {

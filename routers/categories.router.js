@@ -35,7 +35,7 @@ routerCategories.post("/", async (req, res) => {
 });
 
 // Actualiza categoria.
-routerCategories.patch("/:id", async (req, res) => {
+routerCategories.patch("/:id", async (req, res, next) => {
     const { id } = req.params;
     const datas = req.body;
 
@@ -47,10 +47,7 @@ routerCategories.patch("/:id", async (req, res) => {
             categoryUpdate
         });
     } catch (error) {
-        res.status(404).json({
-            error: "Error to update category",
-            message: error
-        });
+        next(error);
     }
 });
 

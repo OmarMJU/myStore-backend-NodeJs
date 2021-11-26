@@ -16,9 +16,11 @@ function boomErrorHandle(err, req, res, next) {
     console.log("Desde el Middleware Boom");
 
     if (err.isBoom) {
+        console.log("Soy Boom, lo gestiona (ver Postman)");
         const { output } = err;
         res.status(output.statusCode).json(output.payload);
     } else {
+        console.log("No soy Boom, no gestiona");
         next(err);
     }
 }
