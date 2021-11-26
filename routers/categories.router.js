@@ -12,17 +12,18 @@ routerCategories.get("/", async (req, res) => {
 });
 
 // Categoria por id.
-routerCategories.get("/:id", async (req, res) => {
+routerCategories.get("/:id", async (req, res, next) => {
     const { id } = req.params;
 
     try {
         const category = await service.getOne(id);
         res.status(200).json(category);
     } catch (error) {
-        res.status(404).json({
-            error: "Error to get category",
-            message: error
-        });
+        next(error);
+        // res.status(404).json({
+        //     error: "Error to get category",
+        //     message: error
+        // });
     }
 });
 

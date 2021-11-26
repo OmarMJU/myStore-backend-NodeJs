@@ -1,9 +1,11 @@
 const routerApi = require("./routers");
 const express = require("express");
+const { logError, errorHandle } = require("./middlewares/errorHandle");
+
 const app = express();
 const _PORT = 3000;
 
-// Middleware
+// Middleware para respuestas en formato JSON
 app.use(express.json());
 
 /* Endpoints home */
@@ -16,3 +18,6 @@ app.listen(_PORT, () => {
 });
 
 routerApi(app);
+
+app.use(logError);
+app.use(errorHandle);

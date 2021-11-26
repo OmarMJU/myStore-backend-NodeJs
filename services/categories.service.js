@@ -38,7 +38,10 @@ class CategoriesServie {
                 const index = this.categories.findIndex(category => category.id === id);
 
                 if (index === -1) {
-                    reject("Categorie not found to get");
+                    reject({
+                        error: "Error to get category",
+                        message: "Categorie not found to get"
+                    });
                 } else {
                     const category = this.categories.filter(item => item.id === id);
                     resolve(category);
