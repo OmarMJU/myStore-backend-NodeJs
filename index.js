@@ -1,5 +1,6 @@
 const routerApi = require("./routers");
 const express = require("express");
+const cors = require("cors");
 const { logError, errorHandle, boomErrorHandle } = require("./middlewares/errorHandle");
 
 const app = express();
@@ -7,6 +8,7 @@ const _PORT = 3000;
 
 // Middleware para respuestas en formato JSON
 app.use(express.json());
+app.use(cors());
 
 /* Endpoints home */
 app.get("/", (req, res) => {
