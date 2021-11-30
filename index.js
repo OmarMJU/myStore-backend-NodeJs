@@ -8,7 +8,20 @@ const _PORT = 3000;
 
 // Middleware para respuestas en formato JSON
 app.use(express.json());
-app.use(cors());
+
+// Configuración de restricción de dominios a la app.
+const whiteList = ["http://localhost:8080", "http://localhost:5500"];
+const options = {
+    origin: (origin, callback) => {
+        if (whiteList.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Connection refused!"));
+        }
+    }
+};
+
+app.use(cors(options));
 
 /* Endpoints home */
 app.get("/", (req, res) => {
