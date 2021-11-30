@@ -1,5 +1,9 @@
 const express = require("express");
 const UserService = require("../services/users.service");
+const validatorHandler = require("../middlewares/validatorHandler");
+const { getUserSchema, createUserSchema, updateUserSchema } = require("../schemas/usersDTO");
+
+// Ruteador para los usuarios.
 const routerUsers = express.Router();
 
 // Instab¡ncia del servicio.
@@ -12,7 +16,7 @@ routerUsers.get("/", async (req, res) => {
 });
 
 // Usuario por id.
-routerUsers.get("/:id", async (req, res, next) => {
+routerUsers.get("/:id", validatorHandler(getUserSchema, "params"), async (req, res, next) => {
     const { id } = req.params;
 
     try {
@@ -24,7 +28,7 @@ routerUsers.get("/:id", async (req, res, next) => {
 });
 
 // Crear Usuario
-routerUsers.post("/", async (req, res) => {
+routerUsers.post("/", validatorHandler(createUserSchema, "body"), async (req, res) => {
     const datas = req.body;
     const userCreate = await service.create(datas);
 
@@ -35,7 +39,7 @@ routerUsers.post("/", async (req, res) => {
 });
 
 // Actualizar usuario
-routerUsers.patch("/:id", async (req, res, next) => {
+routerUsers.patch("/:id", validatorHandler(getUserSchema, "params"), validatorHandler(updateUserSchema, "body"), async (req, res, next) => {
     const { id } = req.params;
     const datas = req.body;
 
@@ -52,7 +56,7 @@ routerUsers.patch("/:id", async (req, res, next) => {
 });
 
 // Eliminar usuario.
-routerUsers.delete("/:id", async (req, res, next) => {
+routerUsers.delete("/:id", validatorHandler(getUserSchema, "params"), async (req, res, next) => {
     const { id } = req.params;
 
     try {

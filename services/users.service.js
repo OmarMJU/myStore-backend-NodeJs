@@ -18,7 +18,7 @@ class UserService {
                 id: faker.datatype.uuid(),
                 name: faker.name.findName(),
                 gender: faker.name.gender(),
-                emal: faker.internet.email(),
+                email: faker.internet.email(),
                 isBlock: faker.datatype.boolean()
             });
         }
