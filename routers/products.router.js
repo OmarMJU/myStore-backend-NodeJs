@@ -1,5 +1,9 @@
 const express = require("express");
 const ProductService = require("../services/products.service");
+const validatorHandler = require("../middlewares/validatorHandler");
+const { createProductSchema, updateProductSchema, getProductSchema } = require("../schemas/productsDTO");
+
+// Router para redireccionar a productos.
 const routerProducts = express.Router();
 
 // Creando instancia del servicio.
@@ -12,7 +16,7 @@ routerProducts.get("/", async (req, res) => {
 });
 
 // Obtiene el producto por id.
-routerProducts.get("/:id", async (req, res, next) => {
+routerProducts.get("/:id", validatorHandler(getProductSchema, "params"), async (req, res, next) => {
     const { id } = req.params;
 
     try {
@@ -24,7 +28,7 @@ routerProducts.get("/:id", async (req, res, next) => {
 });
 
 // Crea producto.
-routerProducts.post("/", async (req, res) => {
+routerProducts.post("/", validatorHandler(createProductSchema, "body"), async (req, res) => {
     const datas = req.body;
     const newProduct = await service.create(datas);
 
@@ -35,7 +39,7 @@ routerProducts.post("/", async (req, res) => {
 });
 
 // Actualiza producto.
-routerProducts.patch("/:id",  async (req, res, next) => {
+routerProducts.patch("/:id", validatorHandler(getProductSchema, "params"), validatorHandler(createProductSchema, "body"), async (req, res, next) => {
     const { id } = req.params;
     const datas = req.body;
 
@@ -52,7 +56,7 @@ routerProducts.patch("/:id",  async (req, res, next) => {
 });
 
 // Elimina producto.
-routerProducts.delete("/:id", async (req, res, next) => {
+routerProducts.delete("/:id", validatorHandler(getProductSchema, "params"), async (req, res, next) => {
     const { id } = req.params;
 
     try {
