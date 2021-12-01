@@ -10,19 +10,19 @@ Para ejecutar la aplicación en desarrollo con [nodemon](https://nodemon.io/)
 $ npm run dev
 ```
 
-Para realizar las peticiones se pueden realizar con [Postman](https://www.postman.com/):rocket: o con [Insomnia](https://insomnia.rest/) :crescent_moon:
+Para realizar las peticiones se pueden realizar con [Postman](https://www.postman.com/) :rocket: o con [Insomnia](https://insomnia.rest/) :crescent_moon:
 
 La apicación corre por defecto en el **puerto 3000**.
 
-## Funcionalidad :crescent_moon:
+## Funcionalidad :fire:
 
 Se puede interactuar con lo siguiente:
 
-* Usuarios :crescent_moon:
+* Usuarios :family:
 * Productos :ring:
 * Categorias :file_folder:
 
-### Usuarios :crescent_moon:
+### Usuarios :family:
 
 #### Consulta de todos usuarios
 
