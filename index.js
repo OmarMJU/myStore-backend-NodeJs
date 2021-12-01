@@ -4,7 +4,7 @@ const cors = require("cors");
 const { logError, errorHandle, boomErrorHandle } = require("./middlewares/errorHandle");
 
 const app = express();
-const _PORT = 3000;
+const _PORT = process.env.PORT || 3000;
 
 // Middleware para respuestas en formato JSON
 app.use(express.json());
