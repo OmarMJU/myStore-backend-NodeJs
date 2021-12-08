@@ -1,5 +1,6 @@
 const faker = require("faker");
 const boom = require("@hapi/boom");
+const getConnection = require("../libs/postgres");
 
 class CategoriesServie {
 
@@ -25,11 +26,14 @@ class CategoriesServie {
 
     // Todas las categorias.
     async getAll() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(this.categories);
-            }, 5000);
-        });
+        // return new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         resolve(this.categories);
+        //     }, 5000);
+        // });
+        const client = await getConnection();
+        const categories = await client.query("SELECT * FROM categories");
+        return categories.rows;
     }
 
     /**
