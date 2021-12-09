@@ -1,38 +1,30 @@
 const faker = require("faker");
 const boom = require("@hapi/boom");
-const getConnection = require("../libs/postgres");
+const pool = require("../libs/postgres");
 
 class CategoriesServie {
 
     // Constuctor de la clase.
     constructor() {
-        this.categories = [
-            { name: "Salud", items: 20 },
-            { name: "Belleza", items: 30 },
-            { name: "Confort", items: 10 }
-        ];
-        this.generateIds();
+       this.categories = [];
+       this.pool = pool;
+       this.pool.on("error", err => console.error(err));
     }
 
     // Genera ids de forma aleatoria.
-    generateIds() {
-        this.categories = this.categories.map(category => {
-            return {
-                id: faker.datatype.uuid(),
-                ...category
-            };
-        });
-    }
+    // generateIds() {
+    //     this.categories = this.categories.map(category => {
+    //         return {
+    //             id: faker.datatype.uuid(),
+    //             ...category
+    //         };
+    //     });
+    // }
 
     // Todas las categorias.
     async getAll() {
-        // return new Promise((resolve, reject) => {
-        //     setTimeout(() => {
-        //         resolve(this.categories);
-        //     }, 5000);
-        // });
-        const client = await getConnection();
-        const categories = await client.query("SELECT * FROM categories");
+        const query = "SELECT * FROM categories";
+        const categories = await this.pool.query(query);
         return categories.rows;
     }
 
@@ -48,32 +40,33 @@ class CategoriesServie {
      */
     // Una categorìa por id.
     async getOne(id) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const category = this.categories.find(item => item.id === id);
-
-                if (!category) {
-                    reject(boom.notFound("Category not found"));
-                }
-
-                resolve(category);
-            }, 2000);
-        });
+        const query = "SELECT * FROM categories where id = $1";
+        const category = await this.pool.query(query, [id]);
+        return category.rows;
     }
 
     // Crea una categoria.
     async create(datas) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const newCategory = {
-                    id: faker.datatype.uuid(),
-                    ...datas
-                };
+        try {
+            let { name, items } = datas;
+            const queryId = "SELECT (MAX(ID) + 1) AS ID FROM CATEGORIES";
+            const { rows } = await this.pool.query(queryId);
 
-                this.categories.push(newCategory);
-                resolve(newCategory);
-            }, 2000);
-        });
+            if (!items) {
+                items = 0;
+            }
+
+            const values = [rows[0].id, name, items];
+            const query = "INSERT INTO CATEGORIES (ID, NAME, ITEMS) VALUES ($1, $2, $3)";
+            await this.pool.query(query, values);
+
+            return {
+                id: rows[0].id,
+                ...datas
+            };
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     // Actualiza una categorìa.
@@ -113,6 +106,7 @@ class CategoriesServie {
         this.categories.splice(index, 1);
         return { id };
     }
+
 }
 
 module.exports = CategoriesServie;
