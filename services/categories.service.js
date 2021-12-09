@@ -11,16 +11,6 @@ class CategoriesServie {
        this.pool.on("error", err => console.error(err));
     }
 
-    // Genera ids de forma aleatoria.
-    // generateIds() {
-    //     this.categories = this.categories.map(category => {
-    //         return {
-    //             id: faker.datatype.uuid(),
-    //             ...category
-    //         };
-    //     });
-    // }
-
     // Todas las categorias.
     async getAll() {
         const query = "SELECT * FROM categories";
