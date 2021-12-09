@@ -23,3 +23,5 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=omauri.Pgadmin0691
     ports:
       - 5050:80
+    volumes:
+      - ./pgadmin_data:/var/lib/pgadmin
