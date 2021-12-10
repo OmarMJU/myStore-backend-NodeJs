@@ -62,10 +62,6 @@ class CategoriesServie {
         };
     }
 
-    /**
-     * N O T A: Para metodos que no regresan promesa o hacen uso de
-     * ellas se puede realizar el "return" y el "throws" de forma normal.
-     */
     // Borrar categoria
     async delete(id) {
         const query = "DELETE FROM CATEGORIES WHERE ID = $1";
