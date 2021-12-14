@@ -1,5 +1,4 @@
 const boom = require("@hapi/boom");
-const { QueryTypes } = require("sequelize/dist");
 const { models } = require("../libs/sequelize");
 
 
