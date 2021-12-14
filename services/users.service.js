@@ -5,16 +5,21 @@ class UserService {
 
     // Obtiene todos los usuarios.
     async getAll() {
-        const users = models.User.findAll();
+        const users = await models.User.findAll();
         return users;
     }
 
     // Obtiene un usuario por Id.
-    async getOne(id) {
+    async getOne(id, changes) {
         const user = await models.User.findByPk(id);
 
         if(!user) {
-            throw boom.notFound("user not found!");
+            throw boom.notFound("User not found.");
+        }
+        if (!changes) {
+            if (user.isBlock) {
+                throw boom.conflict("User blocked.");
+            }
         }
 
         return user;
@@ -28,14 +33,14 @@ class UserService {
 
     // Actualizar usuario.
     async update(id, dataChanges) {
-        const user = await this.getOne(id);
+        const user = await this.getOne(id, true);
         const userUpdated = await user.update(dataChanges);
         return userUpdated;
     }
 
     // Eliminar usuario.
     async delete(id) {
-        const user = await this.getOne(id);
+        const user = await this.getOne(id, true);
         await user.destroy();
         return { id };
     }
