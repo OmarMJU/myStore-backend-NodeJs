@@ -1,100 +1,47 @@
-const faker = require("faker");
 const boom = require("@hapi/boom");
+const { models } = require("../libs/sequelize");
 
 class ProductService {
 
-    // Constructor de la clase.
-    constructor() {
-        this.products = [];
-        this.generate();
-    }
-
-    // Genera productos de forma aleatoria.
-    generate() {
-        const size = 50;
-
-        for (let i = 0; i < size; i++) {
-            this.products.push({
-                id: faker.datatype.uuid(),
-                name: faker.commerce.productName(),
-                price: parseInt(faker.commerce.price(), 10),
-                image: faker.image.imageUrl(),
-                isBlock: faker.datatype.boolean()
-            });
-        }
-    }
-
     // Obtiene todos los productos.
     async getAll() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(this.products)
-            }, 5000);
-        });
+        const products = await models.Product.findAll();
+        return products;
     }
 
     // Obtiene un producto por Id.
-    async getOne(id) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const product = this.products.find(product => product.id === id);
+    async getOne(id, changes) {
+        const product = await models.Product.findByPk(id);
 
-                if (!product) {
-                    reject(boom.notFound("Product not found to get"));
-                } else if (product.isBlock) {
-                    reject(boom.conflict("Product is block"));
-                } else {
-                    resolve(product);
-                }
-            }, 2000);
-        });
+        if (!product) {
+            throw boom.notFound("Product not found.");
+        }
+        if (!changes) {
+            if (product.isBlock) {
+                throw boom.conflict("The product is block");
+            }
+        }
+
+        return product;
     }
 
     // Crea un producto.
     async create(datas) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const newProduct = {
-                    id: faker.datatype.uuid(),
-                    ...datas
-                };
-
-                this.products.push(newProduct);
-                resolve(newProduct);
-            }, 3000);
-        });
+        const newProduct = await models.Product.create(datas);
+        return newProduct;
     }
 
     // Actualiza un producto.
     async update(id, dataChanges) {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const index = this.products.findIndex(item => item.id === id);
-
-                if (index === -1) {
-                    reject(boom.notFound("Product not found to update"));
-                } else {
-                    const product = this.products[index];
-                    this.products[index] = {
-                        ...product,
-                        ...dataChanges
-                    };
-
-                    resolve(this.products[index]);
-                }
-            }, 3000);
-        });
+        const product = await this.getOne(id, true);
+        const productUpdated = await product.update(dataChanges);
+        return productUpdated;
     }
 
     // Elimina un producto.
     async delete(id) {
-        const index = this.products.findIndex(index => index.id === id);
-
-        if (index === -1) {
-            throw boom.notFound("Product not found to delete");
-        }
-
-        this.products.splice(index, 1);
+        const product = await this.getOne(id, true);
+        await product.destroy();
         return { id };
     }
 }

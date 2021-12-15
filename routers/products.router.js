@@ -39,7 +39,7 @@ routerProducts.post("/", validatorHandler(createProductSchema, "body"), async (r
 });
 
 // Actualiza producto.
-routerProducts.patch("/:id", validatorHandler(getProductSchema, "params"), validatorHandler(createProductSchema, "body"), async (req, res, next) => {
+routerProducts.patch("/:id", validatorHandler(getProductSchema, "params"), validatorHandler(updateProductSchema, "body"), async (req, res, next) => {
     const { id } = req.params;
     const datas = req.body;
 
