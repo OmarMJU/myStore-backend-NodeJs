@@ -28,14 +28,19 @@ routerProducts.get("/:id", validatorHandler(getProductSchema, "params"), async (
 });
 
 // Crea producto.
-routerProducts.post("/", validatorHandler(createProductSchema, "body"), async (req, res) => {
+routerProducts.post("/", validatorHandler(createProductSchema, "body"), async (req, res, next) => {
     const datas = req.body;
-    const newProduct = await service.create(datas);
 
-    res.status(201).json({
-        message: "Product Created",
-        newProduct
-    });
+    try {
+        const newProduct = await service.create(datas);
+
+        res.status(201).json({
+            message: "Product Created",
+            newProduct
+        });
+    } catch (error) {
+        next(error)
+    }
 });
 
 // Actualiza producto.
