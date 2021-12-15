@@ -10,9 +10,13 @@ const routerProducts = express.Router();
 const service =  new ProductService();
 
 // Obtiene todos los productos.
-routerProducts.get("/", async (req, res) => {
-    const products = await service.getAll();
-    res.status(200).json(products);
+routerProducts.get("/", async (req, res, next) => {
+    try {
+        const products = await service.getAll();
+        res.status(200).json(products);
+    } catch (error) {
+        next(error);
+    }
 });
 
 // Obtiene el producto por id.

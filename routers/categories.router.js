@@ -10,9 +10,13 @@ const routerCategories = express.Router();
 const service = new CategoriesServie();
 
 // Todas la categorias.
-routerCategories.get("/", async (req, res) => {
-    const categories = await service.getAll();
-    res.status(200).json(categories);
+routerCategories.get("/", async (req, res, next) => {
+    try {
+        const categories = await service.getAll();
+        res.status(200).json(categories);
+    } catch (error) {
+        next(error);
+    }
 });
 
 // Categoria por id.
@@ -28,14 +32,19 @@ routerCategories.get("/:id", validatorHandler(getCategorySchema, "params"), asyn
 });
 
 // Crea categoria.
-routerCategories.post("/", validatorHandler(createCategorySchema, "body"), async (req, res) => {
+routerCategories.post("/", validatorHandler(createCategorySchema, "body"), async (req, res, next) => {
     const datas = req.body;
-    const categoryCreated = await service.create(datas);
 
-    res.status(201).json({
-        message: "Category created",
-        categoryCreated
-    });
+    try {
+        const categoryCreated = await service.create(datas);
+
+        res.status(201).json({
+            message: "Category created",
+            categoryCreated
+        });
+    } catch (error) {
+        next(error);
+    }
 });
 
 // Actualiza categoria.

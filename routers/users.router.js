@@ -10,9 +10,13 @@ const routerUsers = express.Router();
 const service = new UserService();
 
 // Todos los usuarios.
-routerUsers.get("/", async (req, res) => {
-    const users = await service.getAll();
-    res.status(200).json(users);
+routerUsers.get("/", async (req, res, next) => {
+    try {
+        const users = await service.getAll();
+        res.status(200).json(users);
+    } catch (error) {
+        next(error);
+    }
 });
 
 // Usuario por id.
@@ -28,14 +32,19 @@ routerUsers.get("/:id", validatorHandler(getUserSchema, "params"), async (req, r
 });
 
 // Crear Usuario
-routerUsers.post("/", validatorHandler(createUserSchema, "body"), async (req, res) => {
+routerUsers.post("/", validatorHandler(createUserSchema, "body"), async (req, res, next) => {
     const datas = req.body;
-    const userCreate = await service.create(datas);
 
-    res.status(201).json({
-        message: "User created",
-        userCreate
-    });
+    try {
+        const userCreate = await service.create(datas);
+
+        res.status(201).json({
+            message: "User created",
+            userCreate
+        });
+    } catch (error) {
+        next(error);
+    }
 });
 
 // Actualizar usuario
