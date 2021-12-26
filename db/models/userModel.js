@@ -31,6 +31,11 @@ const UserSchema = {
         field: "is_block",
         defaultValue: false
     },
+    role: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        defaultValue: "costumer"
+    },
     createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
