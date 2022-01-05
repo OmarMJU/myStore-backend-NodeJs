@@ -5,7 +5,9 @@ class CostumerService {
 
     // Obtiene todos los clientes
     async getAll() {
-        const costumers = await models.Costumer.findAll();
+        const costumers = await models.Costumer.findAll({
+            include: ["user"]
+        });
         return costumers;
     }
 

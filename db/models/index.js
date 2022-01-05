@@ -11,6 +11,7 @@ function setupModels(sequelize) {
 
     // Asociaciones
     Costumer.associate(sequelize.models);
+    User.associate(sequelize.models);
 }
 
 module.exports = setupModels;
