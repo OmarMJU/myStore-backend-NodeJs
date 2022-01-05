@@ -5,9 +5,7 @@ class UserService {
 
     // Obtiene todos los usuarios.
     async getAll() {
-        const users = await models.User.findAll({
-            include: ["costumer"]
-        });
+        const users = await models.User.findAll({ include: ["costumer"] });
         return users;
     }
 
