@@ -26,6 +26,10 @@ const ProductsSchema = {
         field: "is_block",
         defaultValue: false
     },
+    description: {
+        allowNull: false,
+        type: DataTypes.STRING
+    },
     createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
