@@ -14,9 +14,7 @@ class ProductService {
 
     // Obtiene un producto por Id.
     async getOne(id, changes) {
-        const product = await models.Product.findByPk(id, {
-            include: ["category"]
-        });
+        const product = await models.Product.findByPk(id, { include: ["category"] });
 
         if (!product) {
             throw boom.notFound("Product not found.");
