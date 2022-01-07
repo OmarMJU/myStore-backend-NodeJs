@@ -12,7 +12,9 @@ class CategoriesServie {
 
     // Una categorìa por id.
     async getOne(id) {
-        const categoy = await models.Category.findByPk(id);
+        const categoy = await models.Category.findByPk(id, {
+            include: ["products"]
+        });
 
         if (!categoy) {
             throw boom.notFound("Category not found.");

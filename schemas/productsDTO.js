@@ -12,7 +12,8 @@ const createProductSchema = joi.object({
     name: name.required(),
     price: price.required(),
     image: image.required(),
-    description: description.required()
+    description: description.required(),
+    categoryId: categoryId.required()
 });
 
 const updateProductSchema = joi.object({
