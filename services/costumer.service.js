@@ -11,7 +11,7 @@ class CostumerService {
 
     // Obtiene un cliente por id.
     async getOne(id) {
-        const costumer = await models.Costumer.findByPk(id);
+        const costumer = await models.Costumer.findByPk(id, { include: ["user"] });
 
         if (!costumer) {
             throw boom.notFound("Costumer not found.");
