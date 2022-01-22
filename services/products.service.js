@@ -4,10 +4,18 @@ const { models } = require("../libs/sequelize");
 class ProductService {
 
     // Obtiene todos los productos.
-    async getAll() {
-        const products = await models.Product.findAll({
+    async getAll(query) {
+        const { limit, offset} = query;
+        const options = {
             include: ["category"]
-        });
+        };
+
+        if (limit && offset) {
+            options.limit = limit;
+            options.offset = offset;
+        }
+
+        const products = await models.Product.findAll(options);
 
         return products;
     }

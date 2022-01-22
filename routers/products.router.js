@@ -1,7 +1,7 @@
 const express = require("express");
 const ProductService = require("../services/products.service");
 const validatorHandler = require("../middlewares/validatorHandler");
-const { createProductSchema, updateProductSchema, getProductSchema } = require("../schemas/productsDTO");
+const { createProductSchema, updateProductSchema, getProductSchema, getPaginationSchema } = require("../schemas/productsDTO");
 
 // Router para redireccionar a productos.
 const routerProducts = express.Router();
@@ -10,9 +10,9 @@ const routerProducts = express.Router();
 const service =  new ProductService();
 
 // Obtiene todos los productos.
-routerProducts.get("/", async (req, res, next) => {
+routerProducts.get("/", validatorHandler(getPaginationSchema, "query"), async (req, res, next) => {
     try {
-        const products = await service.getAll();
+        const products = await service.getAll(req.query);
         res.status(200).json(products);
     } catch (error) {
         next(error);
