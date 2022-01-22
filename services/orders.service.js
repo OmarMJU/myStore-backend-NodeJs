@@ -9,10 +9,13 @@ class OrderService {
 
     async getOne(id) {
         const order = await models.Order.findByPk(id, {
-            include: [{
-                association: "costumer",
-                include: ["user"]
-            }]
+            include: [
+                {
+                    association: "costumer",
+                    include: ["user"]
+                },
+                "items"
+            ]
         });
 
         if (!order) {
@@ -25,6 +28,11 @@ class OrderService {
     async create(datas) {
         const newOrder = await models.Order.create(datas);
         return newOrder;
+    }
+
+    async addItem(data) {
+        const newItem = await models.OrderProduct.create(data);
+        return newItem;
     }
 
     async update(id, datas) {

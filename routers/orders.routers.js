@@ -1,7 +1,7 @@
 const express = require("express");
 const OrderService = require("../services/orders.service");
 const validatorHandler = require("../middlewares/validatorHandler");
-const { getOrderSchema, createOrderSchema, updateOrderSchema } = require("../schemas/ordersDTO");
+const { getOrderSchema, createOrderSchema, updateOrderSchema, addItemSchema } = require("../schemas/ordersDTO");
 
 const routerOrders = express.Router();
 const service = new OrderService();
@@ -66,6 +66,20 @@ routerOrders.delete("/:id", validatorHandler(getOrderSchema, "params"), async (r
         res.status(201).json({
             message: "Order deleted",
             orderDeleted
+        });
+    } catch (error) {
+        next(error);
+    }
+});
+
+routerOrders.post("/add-item", validatorHandler(addItemSchema, "body"), async (req, res, next) => {
+    const body = req.body;
+
+    try {
+        const newItem = await service.addItem(body);
+        res.status(201).json({
+            message: "Item added",
+            newItem
         });
     } catch (error) {
         next(error);
