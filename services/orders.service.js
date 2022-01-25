@@ -3,7 +3,7 @@ const { models } = require("../libs/sequelize");
 
 class OrderService {
     async getAll() {
-        const orders = await models.Order.findAll();
+        const orders = await models.Order.findAll({ include: ["items"] });
         return orders;
     }
 
