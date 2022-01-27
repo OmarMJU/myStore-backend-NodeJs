@@ -12,16 +12,21 @@ const CategoriesSchema = {
         allowNull: false,
         type: DataTypes.STRING
     },
-    // items: {
-    //     allowNull: false,
-    //     type: DataTypes.INTEGER,
-    //     defaultValue: 0
-    // },
     createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
         field: "create_at",
         defaultValue: Sequelize.NOW
+    },
+    items: {
+        type: DataTypes.VIRTUAL,
+        get() {
+            if (this.products) {
+                return this.products.length;
+            }
+
+            return 0;
+        }
     }
 };
 

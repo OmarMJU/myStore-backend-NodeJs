@@ -6,7 +6,7 @@ class CategoriesServie {
 
     // Todas las categorias.
     async getAll() {
-        const categories = await models.Category.findAll();
+        const categories = await models.Category.findAll({ include: ["products"] });
         return categories;
     }
 
