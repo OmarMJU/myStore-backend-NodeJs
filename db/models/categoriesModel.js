@@ -12,11 +12,11 @@ const CategoriesSchema = {
         allowNull: false,
         type: DataTypes.STRING
     },
-    items: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        defaultValue: 0
-    },
+    // items: {
+    //     allowNull: false,
+    //     type: DataTypes.INTEGER,
+    //     defaultValue: 0
+    // },
     createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
