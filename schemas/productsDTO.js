@@ -39,7 +39,7 @@ const getPaginationSchema = joi.object({
     price: price,
     price_min: price_min,
     price_max: price_max.when("price_min", {
-        is: joi.number().positive(),
+        is: price_min.required(),
         then: joi.required()
     })
 });
