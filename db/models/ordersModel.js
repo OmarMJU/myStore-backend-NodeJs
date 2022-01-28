@@ -19,11 +19,6 @@ const OrderSchema = {
         type: DataTypes.STRING,
         field: "address_delivery"
     },
-    totalPrice: {
-        allowNull: false,
-        type: DataTypes.DOUBLE,
-        field: "total_price:"
-    },
     costumerId: {
         field: "costumer_id",
         allowNull: false,
