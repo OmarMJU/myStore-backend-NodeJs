@@ -45,7 +45,10 @@ const costumerSchema = {
 
 class Costumer extends Model {
     static associate(models) {
+        // User relationship.
         this.belongsTo(models.User, { as: "user" });
+
+        // Orders relationship.
         this.hasMany(models.Order, {
             as: "order",
             foreignKey: "costumerId"

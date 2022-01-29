@@ -93,8 +93,15 @@ const UserSchema = {
 
 class User extends Model {
     static associate(models) {
+        // Costumer relationship.
         this.hasOne(models.Costumer, {
             as: "costumer",
+            foreignKey: "userId"
+        });
+
+        // Credit card relationship.
+        this.hasMany(models.CreditCard, {
+            as: "creditCard",
             foreignKey: "userId"
         });
     }
