@@ -8,20 +8,12 @@ const UserSchema = {
         primaryKey: true,
         type: DataTypes.INTEGER
     },
-    name: {
-        allowNull: false,
-        type: DataTypes.STRING
-    },
-    gender: {
-        allowNull: false,
-        type: DataTypes.STRING
-    },
-    email: {
+    fullName: {
         allowNull: false,
         type: DataTypes.STRING,
-        unique: true
+        field: "full_name"
     },
-    password: {
+    gender: {
         allowNull: false,
         type: DataTypes.STRING
     },
@@ -35,6 +27,61 @@ const UserSchema = {
         allowNull: false,
         type: DataTypes.STRING,
         defaultValue: "costumer"
+    },
+    phoneNumber: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        field: "phone_number",
+    },
+    address1: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        field: "address_1"
+    },
+    address2: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_2"
+    },
+    address3: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_3"
+    },
+    address4: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_4"
+    },
+    address5: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_5"
+    },
+    address6: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_6"
+    },
+    address7: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_7"
+    },
+    address8: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_8"
+    },
+    address9: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_9"
+    },
+    address10: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_10"
     },
     createdAt: {
         allowNull: false,

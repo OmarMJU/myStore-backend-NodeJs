@@ -9,19 +9,19 @@ const costumerSchema = {
         primaryKey: true,
         type: DataTypes.INTEGER
     },
-    name: {
+    nameUser: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        field: "name_user"
+    },
+    email: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        unique: true
+    },
+    password: {
         allowNull: false,
         type: DataTypes.STRING
-    },
-    lastName: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        field: "last_name"
-    },
-    phoneNumber: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        field: "phone_number",
     },
     createdAt: {
         allowNull: false,
