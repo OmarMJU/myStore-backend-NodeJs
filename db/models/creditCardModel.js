@@ -3,10 +3,10 @@ const { USER_TABLE } = require("./userModel");
 
 const CREDIT_CARD_TABLE = "credit_card";
 const creditCardSchema = {
-    cartNumber: {
+    cardNumber: {
         allowNull: false,
         type: DataTypes.STRING,
-        field: "cart_number"
+        field: "card_number"
     },
     nameOwner: {
         allowNull: false,
