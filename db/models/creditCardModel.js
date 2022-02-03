@@ -20,7 +20,7 @@ const creditCardSchema = {
     },
     secureCode: {
         allowNull: false,
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         field: "secure_code"
     },
     billingAddress: {

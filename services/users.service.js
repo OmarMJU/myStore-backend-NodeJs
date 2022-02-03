@@ -11,7 +11,7 @@ class UserService {
 
     // Obtiene un usuario por Id.
     async getOne(id, changes) {
-        const user = await models.User.findByPk(id, { include: ["costumer"] });
+        const user = await models.User.findByPk(id, { include: ["costumer", "creditCard"] });
 
         if(!user) {
             throw boom.notFound("User not found.");
