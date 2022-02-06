@@ -10,8 +10,8 @@ const { USER_TABLE, UserSchema } = require("../models/userModel");
 
 module.exports = {
   up: async (queryInterface) => {
-    await queryInterface.createTable(USER_TABLE, UserSchema);
     await queryInterface.createTable(COSTUMER_TABLE, costumerSchema);
+    await queryInterface.createTable(USER_TABLE, UserSchema);
     await queryInterface.createTable(CATEGORIES_TABLE, CategoriesSchema);
     await queryInterface.createTable(PRODUCTS_TABLE, ProductsSchema);
     await queryInterface.createTable(ORDER_TABLE, OrderSchema);
@@ -20,8 +20,8 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable(USER_TABLE);
     await queryInterface.dropTable(COSTUMER_TABLE);
+    await queryInterface.dropTable(USER_TABLE);
     await queryInterface.dropTable(CATEGORIES_TABLE);
     await queryInterface.dropTable(PRODUCTS_TABLE);
     await queryInterface.dropTable(ORDER_TABLE);

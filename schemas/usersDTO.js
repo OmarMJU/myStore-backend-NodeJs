@@ -16,6 +16,7 @@ const address7 = joi.string();
 const address8 = joi.string();
 const address9 = joi.string();
 const address10 = joi.string();
+const costumerId = joi.number().integer();
 
 const getUserSchema = joi.object({
     id: id.required()
@@ -27,7 +28,8 @@ const createUserSchema = joi.object({
     isBlock: isBlock,
     role: role,
     phoneNumber: phoneNumber,
-    address1: address1
+    address1: address1,
+    costumerId: costumerId.required()
 });
 
 const updateUserSchema = joi.object({

@@ -1,6 +1,6 @@
 const joi = require("joi");
 
-const cardNumber = joi.number(16);
+const cardNumber = joi.number();
 const nameOwner = joi.string();
 const expirationDate = joi.string();
 const secureCode = joi.string();

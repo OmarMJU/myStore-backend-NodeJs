@@ -1,4 +1,5 @@
 const { Model, DataTypes, Sequelize } = require("sequelize");
+const { COSTUMER_TABLE } = require("./costumerModel");
 
 const USER_TABLE = "users";
 const UserSchema = {
@@ -88,16 +89,30 @@ const UserSchema = {
         type: DataTypes.DATE,
         field: "create_at",
         defaultValue: Sequelize.NOW
+    },
+    costumerId: {
+        field: "costumer_id",
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        unique: true,
+        references: {
+            model: COSTUMER_TABLE,
+            key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL"
     }
 };
 
 class User extends Model {
     static associate(models) {
         // Costumer relationship.
-        this.hasOne(models.Costumer, {
-            as: "costumer",
-            foreignKey: "userId"
-        });
+        // this.hasOne(models.Costumer, {
+        //     as: "costumer",
+        //     foreignKey: "userId"
+        // });
+
+        this.belongsTo(models.Costumer, { as: "costumer" });
 
         // Credit card relationship.
         this.hasMany(models.CreditCard, {
