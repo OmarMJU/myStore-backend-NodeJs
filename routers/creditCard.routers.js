@@ -6,12 +6,12 @@ const { getCreditCardSchema, createCreditCardSchema, updateCreditCardSchema, get
 const cardsRouter = express.Router();
 const service = new CreditCardService();
 
-cardsRouter.get("/:idUser", validatorHandler(getCreditCardSchema, "params"), validatorHandler(getNumberCreditCardSchema, "query"), async (req, res, next) => {
-    const { idUser } = req.params;
+cardsRouter.get("/:userId", validatorHandler(getCreditCardSchema, "params"), validatorHandler(getNumberCreditCardSchema, "query"), async (req, res, next) => {
+    const { userId } = req.params;
     const { numCard } = req.query;
 
     try {
-        const creditCard = await service.getCreditCards(idUser, numCard);
+        const creditCard = await service.getCreditCards(userId, numCard);
         res.status(200).json(creditCard);
     } catch (error) {
         next(error);

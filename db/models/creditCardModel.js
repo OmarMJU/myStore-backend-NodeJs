@@ -45,6 +45,7 @@ class CreditCard extends Model {
     static associate(models) {
         // User relationship.
         this.belongsTo(models.User, { as: "user"});
+        this.removeAttribute("id");
     }
 
     static config(sequelize) {

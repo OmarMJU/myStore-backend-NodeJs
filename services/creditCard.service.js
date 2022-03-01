@@ -15,7 +15,7 @@ class CreditCardService {
 
         const creditCards = await models.CreditCard.findAll(options);
 
-        if (creditCards.length === 0) {
+        if (!creditCards || creditCards.length === 0) {
             throw boom.notFound("Credit card not found.");
         }
 

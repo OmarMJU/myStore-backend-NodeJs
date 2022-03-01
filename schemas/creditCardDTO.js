@@ -8,7 +8,7 @@ const billingAddress = joi.string();
 const userId = joi.number().integer();
 
 const getCreditCardSchema = joi.object({
-    userId: userId.required(),
+    userId: userId.required()
 });
 
 const createCreditCardSchema = joi.object({
@@ -16,6 +16,7 @@ const createCreditCardSchema = joi.object({
     nameOwner: nameOwner.required(),
     expirationDate: expirationDate.required(),
     secureCode: secureCode.required(),
+    billingAddress: billingAddress.required(),
     userId: userId.required()
 });
 
