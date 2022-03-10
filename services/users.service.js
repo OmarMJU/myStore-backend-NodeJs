@@ -11,7 +11,7 @@ class UserService {
 
     // Obtiene un usuario por Id.
     async getOne(id, changes) {
-        const user = await models.User.findByPk(id, { include: ["costumer"] });
+        const user = await models.User.findByPk(id, { include: ["costumer", "creditCard"] });
 
         if(!user) {
             throw boom.notFound("User not found.");
@@ -43,6 +43,12 @@ class UserService {
         const user = await this.getOne(id, true);
         await user.destroy();
         return { id };
+    }
+
+    // Agregar una Tarjeta
+    async addCard(datas) {
+        const newCard = await models.UserCard.create(datas);
+        return newCard;
     }
 }
 

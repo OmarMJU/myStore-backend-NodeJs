@@ -1,5 +1,4 @@
 const { Model, DataTypes, Sequelize } = require("sequelize");
-const { USER_TABLE } = require("./userModel");
 
 const COSTUMER_TABLE = "costumer";
 const costumerSchema = {
@@ -9,43 +8,37 @@ const costumerSchema = {
         primaryKey: true,
         type: DataTypes.INTEGER
     },
-    name: {
+    nameUser: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        field: "name_user"
+    },
+    email: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        unique: true
+    },
+    password: {
         allowNull: false,
         type: DataTypes.STRING
-    },
-    lastName: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        field: "last_name"
-    },
-    phoneNumber: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        field: "phone_number",
     },
     createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
         field: "create_at",
         defaultValue: Sequelize.NOW
-    },
-    userId: {
-        field: "user_id",
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        unique: true,
-        references: {
-            model: USER_TABLE,
-            key: "id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "SET NULL"
     }
 };
 
 class Costumer extends Model {
     static associate(models) {
-        this.belongsTo(models.User, { as: "user" });
+        // User relationship.
+        this.hasOne(models.User, {
+            as: "user",
+            foreignKey: "costumerId"
+        });
+
+        // Orders relationship.
         this.hasMany(models.Order, {
             as: "order",
             foreignKey: "costumerId"

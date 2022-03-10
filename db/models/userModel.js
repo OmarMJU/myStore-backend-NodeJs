@@ -1,4 +1,5 @@
 const { Model, DataTypes, Sequelize } = require("sequelize");
+const { COSTUMER_TABLE } = require("./costumerModel");
 
 const USER_TABLE = "users";
 const UserSchema = {
@@ -8,20 +9,12 @@ const UserSchema = {
         primaryKey: true,
         type: DataTypes.INTEGER
     },
-    name: {
-        allowNull: false,
-        type: DataTypes.STRING
-    },
-    gender: {
-        allowNull: false,
-        type: DataTypes.STRING
-    },
-    email: {
+    fullName: {
         allowNull: false,
         type: DataTypes.STRING,
-        unique: true
+        field: "full_name"
     },
-    password: {
+    gender: {
         allowNull: false,
         type: DataTypes.STRING
     },
@@ -36,19 +29,92 @@ const UserSchema = {
         type: DataTypes.STRING,
         defaultValue: "costumer"
     },
+    phoneNumber: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        field: "phone_number",
+    },
+    address1: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        field: "address_1"
+    },
+    address2: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_2"
+    },
+    address3: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_3"
+    },
+    address4: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_4"
+    },
+    address5: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_5"
+    },
+    address6: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_6"
+    },
+    address7: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_7"
+    },
+    address8: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_8"
+    },
+    address9: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_9"
+    },
+    address10: {
+        allowNull: true,
+        type: DataTypes.STRING,
+        field: "address_10"
+    },
     createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
         field: "create_at",
         defaultValue: Sequelize.NOW
+    },
+    costumerId: {
+        field: "costumer_id",
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        unique: true,
+        references: {
+            model: COSTUMER_TABLE,
+            key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL"
     }
 };
 
 class User extends Model {
     static associate(models) {
-        this.hasOne(models.Costumer, {
-            as: "costumer",
-            foreignKey: "userId"
+        // Costumer relationship.
+        this.belongsTo(models.Costumer, { as: "costumer" });
+
+        // Credit card relationship.
+        this.belongsToMany(models.CreditCard, {
+            as: "creditCard",
+            through: models.UserCard,
+            foreignKey: "userId",
+            otherKey: "cardId"
         });
     }
 
