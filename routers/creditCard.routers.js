@@ -6,7 +6,7 @@ const { getCreditCardSchema, createCreditCardSchema, updateCreditCardSchema, get
 const cardsRouter = express.Router();
 const service = new CreditCardService();
 
-cardsRouter.get("/:userId", validatorHandler(getCreditCardSchema, "params"), validatorHandler(getNumberCreditCardSchema, "query"), async (req, res, next) => {
+cardsRouter.get("/:userId", validatorHandler(getCreditCardSchema, "params"), async (req, res, next) => {
     const { userId } = req.params;
     const { numCard } = req.query;
 
@@ -32,12 +32,13 @@ cardsRouter.post("/", validatorHandler(createCreditCardSchema, "body"), async (r
     }
 });
 
-cardsRouter.patch("/:idUser", validatorHandler(getCreditCardSchema, "params"), validatorHandler(updateCreditCardSchema, "body"), async (req, res, next) => {
-    const { idUser } = req.params;
+cardsRouter.patch("/:userId", validatorHandler(getCreditCardSchema, "params"), validatorHandler(getNumberCreditCardSchema, "query"), validatorHandler(updateCreditCardSchema, "body"), async (req, res, next) => {
+    const { userId } = req.params;
+    const { id } = req.query;
     const datas = req.body;
 
     try {
-        const creditCard = await service.updateCreditCard(idUser, datas);
+        const creditCard = await service.updateCreditCard(userId, id, datas);
         res.status(201).json({
             message: "Credit card updated.",
             creditCard
@@ -47,12 +48,12 @@ cardsRouter.patch("/:idUser", validatorHandler(getCreditCardSchema, "params"), v
     }
 });
 
-cardsRouter.delete("/:idUser", validatorHandler(getCreditCardSchema, "params"), validatorHandler(getNumberCreditCardSchema), async (req, res, next) => {
-    const { idUser } = req.params;
-    const datas = req.body;
+cardsRouter.delete("/:userId", validatorHandler(getCreditCardSchema, "params"), validatorHandler(getNumberCreditCardSchema, "query"), async (req, res, next) => {
+    const { userId } = req.params;
+    const { id } = req.query;
 
     try {
-        const cardDelete = await service.deleteCreditCard(idUser, datas);
+        const cardDelete = await service.deleteCreditCard(userId, id);
         res.status(201).json({
             message: "Credit card deleted.",
             cardDelete

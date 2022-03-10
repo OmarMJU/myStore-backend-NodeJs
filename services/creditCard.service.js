@@ -10,7 +10,7 @@ class CreditCardService {
         };
 
         if (numCard) {
-            options.where.cardNumber = numCard;
+            options.where.id = numCard;
         }
 
         const creditCards = await models.CreditCard.findAll(options);
@@ -27,16 +27,19 @@ class CreditCardService {
         return newCard;
     }
 
-    async updateCreditCard(userId, datas) {
-        const creditCard = await this.getCreditCards(userId, datas.cardNumber);
-        const creditCardUpdate = await creditCard[0].update(datas);
+    async updateCreditCard(userId, numCard, datas) {
+        const creditCards = await this.getCreditCards(userId, numCard);
+        const creditCardUpdate = await creditCards[0].update(datas);
         return creditCardUpdate;
     }
 
-    async deleteCreditCard(userId, datas) {
-        const creditCard = await this.getCreditCards(userId, datas.cardNumber);
-        await creditCard[0].destroy();
-        return datas;
+    async deleteCreditCard(userId, numCard) {
+        const creditCards = await this.getCreditCards(userId, numCard);
+        await creditCards[0].destroy();
+        return {
+            userId,
+            numCard
+        };
     }
 }
 

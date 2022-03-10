@@ -3,10 +3,10 @@ const { USER_TABLE } = require("./userModel");
 
 const CREDIT_CARD_TABLE = "credit_card";
 const creditCardSchema = {
-    cardNumber: {
+    id: {
         allowNull: false,
         type: DataTypes.STRING,
-        field: "card_number"
+        primaryKey: true,
     },
     nameOwner: {
         allowNull: false,
@@ -38,6 +38,12 @@ const creditCardSchema = {
         },
         onUpdate: "CASCADE",
         onDelete: "SET NULL"
+    },
+    createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        field: 'created_at',
+        defaultValue: Sequelize.NOW
     }
 };
 
@@ -45,7 +51,6 @@ class CreditCard extends Model {
     static associate(models) {
         // User relationship.
         this.belongsTo(models.User, { as: "user"});
-        this.removeAttribute("id");
     }
 
     static config(sequelize) {
@@ -54,7 +59,7 @@ class CreditCard extends Model {
             tableName: CREDIT_CARD_TABLE,
             modelName: "CreditCard",
             timestamps: false
-        }
+        };
     }
 }
 

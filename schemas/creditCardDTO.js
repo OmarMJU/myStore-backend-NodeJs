@@ -1,6 +1,6 @@
 const joi = require("joi");
 
-const cardNumber = joi.number();
+const id = joi.string();
 const nameOwner = joi.string();
 const expirationDate = joi.string();
 const secureCode = joi.string();
@@ -12,7 +12,7 @@ const getCreditCardSchema = joi.object({
 });
 
 const createCreditCardSchema = joi.object({
-    cardNumber: cardNumber.required(),
+    id: id.required(),
     nameOwner: nameOwner.required(),
     expirationDate: expirationDate.required(),
     secureCode: secureCode.required(),
@@ -21,8 +21,6 @@ const createCreditCardSchema = joi.object({
 });
 
 const updateCreditCardSchema  = joi.object({
-    cardNumber: cardNumber,
-    nameOwner: nameOwner,
     expirationDate: expirationDate,
     secureCode: secureCode,
     billingAddress: billingAddress,
@@ -30,7 +28,7 @@ const updateCreditCardSchema  = joi.object({
 });
 
 const getNumberCreditCardSchema = joi.object({
-    cardNumber: cardNumber
+    id: id.required()
 });
 
 module.exports = { getCreditCardSchema, createCreditCardSchema, updateCreditCardSchema, getNumberCreditCardSchema };
