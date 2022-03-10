@@ -7,6 +7,7 @@ const { ORDER_PRODUCT_TABLE, OrderProductSchema } = require("../models/orderProd
 const { ORDER_TABLE, OrderSchema } = require("../models/ordersModel");
 const { PRODUCTS_TABLE, ProductsSchema } = require("../models/productsModel");
 const { USER_TABLE, UserSchema } = require("../models/userModel");
+const { USER_CARD_TABLE, userCardSchema } = require("../models/userCardModel");
 
 module.exports = {
   up: async (queryInterface) => {
@@ -17,6 +18,7 @@ module.exports = {
     await queryInterface.createTable(ORDER_TABLE, OrderSchema);
     await queryInterface.createTable(CREDIT_CARD_TABLE, creditCardSchema);
     await queryInterface.createTable(ORDER_PRODUCT_TABLE, OrderProductSchema);
+    await queryInterface.createTable(USER_CARD_TABLE, userCardSchema);
   },
 
   down: async (queryInterface) => {
@@ -27,5 +29,6 @@ module.exports = {
     await queryInterface.dropTable(ORDER_TABLE);
     await queryInterface.dropTable(CREDIT_CARD_TABLE);
     await queryInterface.dropTable(ORDER_PRODUCT_TABLE);
+    await queryInterface.dropTable(USER_CARD_TABLE);
   }
 };

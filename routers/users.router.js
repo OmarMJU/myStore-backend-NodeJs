@@ -1,7 +1,7 @@
 const express = require("express");
 const UserService = require("../services/users.service");
 const validatorHandler = require("../middlewares/validatorHandler");
-const { getUserSchema, createUserSchema, updateUserSchema } = require("../schemas/usersDTO");
+const { getUserSchema, createUserSchema, updateUserSchema, addCardChema } = require("../schemas/usersDTO");
 
 // Ruteador para los usuarios.
 const routerUsers = express.Router();
@@ -74,6 +74,21 @@ routerUsers.delete("/:id", validatorHandler(getUserSchema, "params"), async (req
         res.status(201).json({
             message: "User deleted",
             userDelete
+        });
+    } catch (error) {
+        next(error);
+    }
+});
+
+// Add Card
+routerUsers.post("/add-card", validatorHandler(addCardChema, "body"), async (req, res, next) => {
+    const body = req.body;
+
+    try {
+        const newCard = await service.addCard(body);
+        res.status(201).json({
+            message: "Card added",
+            newCard
         });
     } catch (error) {
         next(error);

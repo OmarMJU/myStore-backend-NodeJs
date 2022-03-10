@@ -107,17 +107,14 @@ const UserSchema = {
 class User extends Model {
     static associate(models) {
         // Costumer relationship.
-        // this.hasOne(models.Costumer, {
-        //     as: "costumer",
-        //     foreignKey: "userId"
-        // });
-
         this.belongsTo(models.Costumer, { as: "costumer" });
 
         // Credit card relationship.
-        this.hasMany(models.CreditCard, {
+        this.belongsToMany(models.CreditCard, {
             as: "creditCard",
-            foreignKey: "userId"
+            through: models.UserCard,
+            foreignKey: "userId",
+            otherKey: "cardId"
         });
     }
 

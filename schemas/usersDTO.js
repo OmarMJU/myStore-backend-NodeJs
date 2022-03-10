@@ -17,6 +17,8 @@ const address8 = joi.string();
 const address9 = joi.string();
 const address10 = joi.string();
 const costumerId = joi.number().integer();
+const userId = joi.number().integer();
+const cardId = joi.string();
 
 const getUserSchema = joi.object({
     id: id.required()
@@ -50,4 +52,9 @@ const updateUserSchema = joi.object({
     address10: address10
 });
 
-module.exports = { getUserSchema, createUserSchema, updateUserSchema };
+const addCardChema = joi.object({
+    userId: userId.required(),
+    cardId: cardId.required()
+});
+
+module.exports = { getUserSchema, createUserSchema, updateUserSchema, addCardChema };

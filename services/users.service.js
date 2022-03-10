@@ -44,6 +44,12 @@ class UserService {
         await user.destroy();
         return { id };
     }
+
+    // Agregar una Tarjeta
+    async addCard(datas) {
+        const newCard = await models.UserCard.create(datas);
+        return newCard;
+    }
 }
 
 module.exports = UserService;
