@@ -33,7 +33,6 @@ const costumerSchema = {
 class Costumer extends Model {
     static associate(models) {
         // User relationship.
-        // this.belongsTo(models.User, { as: "user" });
         this.hasOne(models.User, {
             as: "user",
             foreignKey: "costumerId"
