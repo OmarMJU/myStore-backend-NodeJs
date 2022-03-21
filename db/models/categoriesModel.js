@@ -18,16 +18,16 @@ const CategoriesSchema = {
         field: "create_at",
         defaultValue: Sequelize.NOW
     },
-    // items: {
-    //     type: DataTypes.VIRTUAL,
-    //     get() {
-    //         if (this.products) {
-    //             return this.products.length;
-    //         }
+    items: {
+        type: DataTypes.VIRTUAL,
+        get() {
+            if (this.products) {
+                return this.products.length;
+            }
 
-    //         return 0;
-    //     }
-    // }
+            return 0;
+        }
+    }
 };
 
 class Category extends Model {
