@@ -11,8 +11,10 @@ module.exports = {
     production: {
         url,
         dialect,
-        ssl: {
-            rejectUnauthorized: false
+        dialectOptions: {
+            ssl: {
+                rejectUnauthorized: false
+            }
         }
     }
 };
